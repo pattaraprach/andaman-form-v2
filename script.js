@@ -42,12 +42,19 @@ document.getElementById('itineraryForm').addEventListener('submit', async functi
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data })
     });
-
+    
     const result = await response.json();
     const output = document.getElementById("result");
-    if (result.downloadUrl) {
-      output.innerHTML = `<a href="${result.downloadUrl}" target="_blank">Download Itinerary</a>`;
+    
+    if (result.status === 200 && result.data) {
+      output.innerHTML = `
+        <p>${result.message}</p>
+        <a href="${result.data}" target="_blank" download>Download Itinerary (PDF)</a>
+      `;
     } else {
-      output.innerHTML = `<p>Error generating document: ${result.message || 'Unknown error'}</p>`;
+      output.innerHTML = `<p>Error: ${result.message || 'Unknown error'}</p>`;
     }
   });
+
+  
+  
