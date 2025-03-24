@@ -6,6 +6,20 @@ document.getElementById('itineraryForm').addEventListener('submit', async functi
     formData.forEach((value, key) => data[key] = value);
 
     const fromDate = new Date(data["fromDate"]);
+    const toDate = new Date(data["toDate"]);
+
+    if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+      const output = document.getElementById("result");
+      output.innerHTML = '<p>Error: Invalid dates provided</p>';
+      return;
+    }
+
+    if (toDate < fromDate) {
+      const output = document.getElementById("result");
+      output.innerHTML = '<p>Error: To date must be after from date</p>';
+      return;
+    }
+
     const formatDate = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const addDays = days => new Date(fromDate.getTime() + days * 86400000);
 

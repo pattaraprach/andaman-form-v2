@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     const payload = {
       document: documentId,
       apiKey: apiKey,
-      format: 'docx',
+      format: 'pdf',
       data: req.body.data
     };
   
@@ -22,9 +22,18 @@ export default async function handler(req, res) {
       });
   
       const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.message || `HTTP error! status: ${response.status}`);
+      }
+      
       res.status(response.status).json(result);
     } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error', details: error.message });
+      console.error('API Error:', error);
+      res.status(500).json({ 
+        error: 'Internal Server Error', 
+        details: error.message 
+      });
     }
   }
   
