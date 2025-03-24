@@ -23,6 +23,10 @@ document.getElementById('itineraryForm').addEventListener('submit', async functi
     const formatDate = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const addDays = days => new Date(fromDate.getTime() + days * 86400000);
 
+      // Format the two main fields as well
+    data["fromDate"] = formatDate(fromDate);
+    data["toDate"] = formatDate(toDate);
+
     data["arrivalDate"] = formatDate(addDays(0));
     data["PHfromDate"]  = formatDate(addDays(0));
     data["PHtoDate"]    = formatDate(addDays(2));
