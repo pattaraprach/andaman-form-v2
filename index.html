@@ -91,12 +91,18 @@
   </style>
 </head>
 <body>
-  <h2>Generate Itinerary</h2>
+  <h2>Generate Travel Itinerary</h2>
   <form id="itineraryForm">
     <label>Guest Name: <input name="Guest Name" required /></label><br>
     <label>Adults: <input name="Adults" type="number" required /></label><br>
     <label>From Date: <input name="fromDate" type="date" required /></label><br>
     <label>To Date: <input name="toDate" type="date" required /></label><br>
+    <label>Itinerary No.: <input name="itinNumber" /></label><br>
+    <label>Reference No.: <input name="refNumber" /></label><br>
+    <label>Flight In: <input name="flight_in" /></label><br>
+    <label>Flight In Time: <input name="flight_in_time" type="time" /></label><br>
+    <label>Flight Out: <input name="flight_out" /></label><br>
+    <label>Flight Out Time: <input name="flight_out_time" type="time" /></label><br>
     <button type="submit">Generate</button>
   </form>
   <div id="result"></div>
