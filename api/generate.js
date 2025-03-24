@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       document: documentId,
       apiKey: apiKey,
       format: 'docx',
-      data: req.body.data // assuming frontend sends { data: {...} }
+      data: req.body.data
     };
   
     try {
@@ -24,7 +24,6 @@ export default async function handler(req, res) {
       const result = await response.json();
       res.status(response.status).json(result);
     } catch (error) {
-      console.error('Documentero API error:', error);
       res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
   }

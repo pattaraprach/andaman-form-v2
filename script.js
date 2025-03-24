@@ -1,15 +1,14 @@
 document.getElementById('itineraryForm').addEventListener('submit', async function (e) {
     e.preventDefault();
-  
+
     const formData = new FormData(e.target);
     const data = {};
     formData.forEach((value, key) => data[key] = value);
-  
-    // Auto-fill date fields
+
     const fromDate = new Date(data["fromDate"]);
     const formatDate = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const addDays = days => new Date(fromDate.getTime() + days * 86400000);
-  
+
     data["arrivalDate"] = formatDate(addDays(0));
     data["PHfromDate"]  = formatDate(addDays(0));
     data["PHtoDate"]    = formatDate(addDays(2));
@@ -23,20 +22,18 @@ document.getElementById('itineraryForm').addEventListener('submit', async functi
     data["KBfromDate"]  = formatDate(addDays(8));
     data["KBtoDate"]    = formatDate(addDays(12));
     data["transfer_5"]  = formatDate(addDays(12));
-  
-    // Replace with your actual Documentero Form ID
+
     const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data })  // your data object with filled fields
-      });
-  
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data })
+    });
+
     const result = await response.json();
     const output = document.getElementById("result");
     if (result.downloadUrl) {
-        document.getElementById('result').innerHTML = `<a href="${result.downloadUrl}" target="_blank">Download Itinerary</a>`;
-      } else {
-        document.getElementById('result').innerHTML = `<p>Error generating document.</p>`;
-      }
+      output.innerHTML = `<a href="${result.downloadUrl}" target="_blank">Download Itinerary</a>`;
+    } else {
+      output.innerHTML = `<p>Error generating document: ${result.message || 'Unknown error'}</p>`;
+    }
   });
-  
